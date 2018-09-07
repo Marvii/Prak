@@ -5,7 +5,7 @@ public class PatternMatch {
     static ArrayList<Integer> bruteForce(String input, String search, boolean cs) {
         
         ArrayList match = new ArrayList<Integer>();
-        // int i = input.indexOf(search);
+        
         if (input.contains(search)) {
             if (!cs) {
                 input = input.toLowerCase();
