@@ -1,0 +1,31 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class Ztest {
+    public static void main(String args[]) throws FileNotFoundException {
+        String seq="wirbrauchenmehrLUL";
+        String ref="wirbrauchenmehrLULhiergibtszuwenigLULwirbrauchenmehrLUL";
+        Z zz = new Z();
+        zz.search(ref, seq);
+        zz.printMatchPosition();
+    }
+}
+/*
+1d)
+        long start = System.currentTimeMillis();
+        Z zz = new Z();
+        String seq="Pudel";
+        Scanner in = new Scanner(new File("C:\\Users\\Marvin\\Desktop\\Uni\\Prak\\Block5\\pg2229.txt"));
+        String line="";
+        String header = in.nextLine();
+
+        while(in.hasNextLine()) {
+            line += in.nextLine();
+        }
+        zz.search(line, seq);
+        zz.printPos();
+        long finish = System.currentTimeMillis();
+        long runtime = finish-start;
+        System.out.println(runtime);
+ */
