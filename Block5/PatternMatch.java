@@ -40,23 +40,29 @@ public class PatternMatch {
         return prefTable;
     }
     
-    static ArrayList<Integer> kmp(String input, String search, int[] prefTable) {
+    static ArrayList<Integer> kmp(String input, String search, int[] prefTable, boolean cs) {
         ArrayList match = new ArrayList<Integer>();
-        int m = input.length(), n = search.length();             // set boundaries
-        int i = 0, j = 0;                                        // set search counters/pointers
-        while (i < m) {                                          // check if inside the source string
-            while (j >= 0 && input.charAt(i) != search.charAt(j)) {     // check for NOT A MATCH
-                j = prefTable[j];                                       // reset pointer inside the prefix table
+        if (input.contains(search)) {
+            if (!cs) {
+                input = input.toLowerCase();
+                search = search.toLowerCase();
             }
-            i++;                                                 // else if char at [N] matches, go on for [N+1] in source
-            j++;                                                 // also go for [N+1] in prefix
-            if (j == n) {                                        // check for MATCH
-                match.add(i - n);                                // write down the index of match relative to source
-                j = prefTable[j - 1];                            // go on with the prefix table
+            
+            int m = input.length(), n = search.length();             // set boundaries
+            int i = 0, j = 0;                                        // set search counters/pointers
+            while (i < m) {                                          // check if inside the source string
+                while (j >= 0 && input.charAt(i) != search.charAt(j)) {     // check for NOT A MATCH
+                    j = prefTable[j];                                       // reset pointer inside the prefix table
+                }
+                i++;                                                 // else if char at [N] matches, go on for [N+1] in source
+                j++;                                                 // also go for [N+1] in prefix
+                if (j == n) {                                        // check for MATCH
+                    match.add(i - n);                                // write down the index of match relative to source
+                    j = prefTable[j - 1];                            // go on with the prefix table
+                }
             }
         }
         System.out.println("Number of hits: " + match.size());
         return match;
     }
 }
-
