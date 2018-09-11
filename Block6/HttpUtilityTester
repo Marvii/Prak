@@ -1,0 +1,58 @@
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+public class HttpUtilityTester {
+
+    /**
+     * This program uses the HttpUtility class to send a GET request to
+     * Google home page; and send a POST request to Gmail login page.
+     */
+    public static void main(String[] args) {
+        //tests both in one
+        String requestURL = "http://httpbin.org/get";
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("Email", "your_email");
+        params.put("Passwd", "your_password");
+        try {
+        HttpUtility.sendRequest(requestURL,params);
+        } catch (IOException ex){
+        ex.printStackTrace();
+        }
+        HttpUtility.disconnect();
+/*
+        // test sending GET request
+        requestURL = "http://httpbin.org/get";
+        try {
+            HttpUtility.sendGetRequest(requestURL);
+            String[] response = HttpUtility.readMultipleLinesRespone();
+            for (String line : response) {
+                System.out.println(line);
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        HttpUtility.disconnect();
+*/
+
+        System.out.println("=====================================");
+/*
+        // test sending POST request
+        Map<String, String> params2 = new HashMap<String, String>();
+        requestURL = "http://httpbin.org/post";
+        params2.put("Email", "your_email");
+        params2.put("Passwd", "your_password");
+
+        try {
+            HttpUtility.sendPostRequest(requestURL, params2);
+            String[] response = HttpUtility.readMultipleLinesRespone();
+            for (String line : response) {
+                System.out.println(line);
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        HttpUtility.disconnect();
+    */
+    }
+}
