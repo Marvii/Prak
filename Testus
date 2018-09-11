@@ -1,1 +1,18 @@
+import Http.HttpConnector;
 
+import java.io.IOException;
+
+public class AnnotatedMessage {
+
+
+    public AnnotatedMessage() throws IOException {
+        StringBuilder OgMsg = new StringBuilder();
+        String[] response = HttpConnector.readMultipleLinesRespone();
+        for (String line : response) {
+            OgMsg.append(line);
+        }
+        System.out.println(OgMsg);
+        
+    }
+    //todo Orginalnachricht check + Analyse = Liste
+}
