@@ -1,0 +1,85 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+public class HttpUtility {
+    private static HttpURLConnection httpConn;   //Represents an HTTP connection
+    //todo logik durchgehen und gucken warum nichts ausgegeben wird debugg?
+//todo über map mit foreach schleife laufen
+    //todo readMultipleLinesRespone in get und post überprüfen gibt array zurück
+
+    public static HttpURLConnection sendRequest(String requestURL, Map<String, String> params) throws IOException {
+        URL url = new URL(requestURL);
+        httpConn = (HttpURLConnection) url.openConnection();
+        httpConn.setUseCaches(false);
+        if (params != null && params.size() > 0) {
+            httpConn.setDoOutput(true);}// true indicates the server returns response
+            else {httpConn.setDoOutput(false);}
+        if(httpConn.getDoOutput()){
+            sendPostRequest(params);}
+        else{
+            httpConn.setDoInput(true); }// true if we want to read server's response
+    return httpConn;}
+
+
+    public static HttpURLConnection sendPostRequest(Map<String, String> params) throws IOException {
+        StringBuffer requestParams = new StringBuffer();
+        // creates the params string, encode them using URLEncoder
+            Iterator<String> paramIterator = params.keySet().iterator();
+            while (paramIterator.hasNext()) {
+                String key = paramIterator.next();
+                String value = params.get(key);
+                requestParams.append(URLEncoder.encode(key, "UTF-8"));
+                requestParams.append("=").append(
+                        URLEncoder.encode(value, "UTF-8"));
+                requestParams.append("&");
+            }
+
+            // sends POST data
+            OutputStreamWriter writer = new OutputStreamWriter(
+                    httpConn.getOutputStream());
+            writer.write(requestParams.toString());
+            writer.flush();
+        return httpConn;
+    }
+
+    public static HttpURLConnection sendGetRequest() throws IOException {
+        return httpConn;
+    }
+
+    public static String[] readMultipleLinesRespone() throws IOException {
+        InputStream inputStream = null;
+        if (httpConn != null) {
+            inputStream = httpConn.getInputStream();
+        } else {
+            throw new IOException("Connection is not established.");
+        }
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(
+                inputStream));
+        List<String> response = new ArrayList<String>();
+
+        String line = "";
+        while ((line = reader.readLine()) != null) {
+            response.add(line);
+        }
+        reader.close();
+
+        return (String[]) response.toArray(new String[0]);
+    }
+
+    public static void disconnect() { //Closes the connection if opened
+        if (httpConn != null) {
+            httpConn.disconnect();
+        }
+    }
+}
