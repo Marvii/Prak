@@ -1,0 +1,20 @@
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class AnnotatedMessage <I>{
+    protected String msg;
+    protected List<I>Anno = new ArrayList<>();
+
+    public AnnotatedMessage(String OgMsg){
+        msg=OgMsg;
+    }
+    public String getMsg(){
+        return msg;}
+    public List<I> getAnno(){
+        return Anno;
+    }
+    public void addAnno(I inhalt){
+        Anno.add(inhalt);
+    }
+}
