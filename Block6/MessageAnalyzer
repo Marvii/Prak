@@ -1,0 +1,3 @@
+public  interface MessageAnalyzer<I> {
+    AnnotatedMessage<I> analyzeMessage (String OgMsg);
+}
