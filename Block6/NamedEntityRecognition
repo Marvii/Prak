@@ -1,0 +1,6 @@
+public class NamedEntityRecognition implements MessageAnalyzer<NamedAnno>{
+    @Override
+    public AnnotatedMessage<NamedAnno> analyzeMessage(String OgMsg) {
+        return null;
+    }
+}
