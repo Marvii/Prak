@@ -1,0 +1,6 @@
+public class SentimentAnalysis implements MessageAnalyzer<SentimentAnno> {
+    @Override
+    public AnnotatedMessage<SentimentAnno> analyzeMessage(String OgMsg) {
+        return null;
+    }
+}
