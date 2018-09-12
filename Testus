@@ -1,18 +1,30 @@
-import Http.HttpConnector;
+import org.json.JSONObject;
+import org.json.Property;
 
 import java.io.IOException;
+import java.util.Map;
+import java.util.Properties;
 
-public class AnnotatedMessage {
-
-
-    public AnnotatedMessage() throws IOException {
-        StringBuilder OgMsg = new StringBuilder();
-        String[] response = HttpConnector.readMultipleLinesRespone();
-        for (String line : response) {
-            OgMsg.append(line);
-        }
-        System.out.println(OgMsg);
+public class Main {
+    public static void main(String[] args) {
+        String requestURL = "http://dbsvm.mathematik.uni-marburg.de:7999";
+        Map<String, String> properties = null;
+        String[] type = {"sentiment", "ner"};
+        properties.put("annotators", type[0]);
+        properties.put("outputFormat", "json");
+        JSONObject propertiesMap = new JSONObject(properties);
+        Properties propertiesMapObj = Property.toProperties(propertiesMap);
         
+    
+        try {
+            HttpUtility.sendJSONPostRequest(requestURL, propertiesMapObj);
+            String[] response = HttpUtility.readMultipleLinesResponse();
+            for (String line : response) {
+                System.out.println(line);
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        HttpUtility.disconnect();
     }
-    //todo Orginalnachricht check + Analyse = Liste
 }
